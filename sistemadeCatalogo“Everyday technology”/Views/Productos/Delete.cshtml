@@ -1,0 +1,26 @@
+﻿@model sistemadeCatalogo_Everyday_technology_.Models.Producto
+@{ ViewBag.Title = "Eliminar producto"; }
+
+<h2>Eliminar producto</h2>
+<div class="alert alert-danger">¿Seguro que deseas eliminar este producto? Esta acción no se puede deshacer.</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <img src="~/Content/Imagenes/@Model.Imagen" class="img-fluid rounded" />
+    </div>
+    <div class="col-md-9">
+        <dl class="row">
+            <dt class="col-sm-3">Código</dt><dd class="col-sm-9">@Model.Codigo</dd>
+            <dt class="col-sm-3">Nombre</dt><dd class="col-sm-9">@Model.Nombre</dd>
+            <dt class="col-sm-3">Precio</dt><dd class="col-sm-9">@Model.Precio.ToString("C")</dd>
+        </dl>
+    </div>
+</div>
+
+@using (Html.BeginForm("Delete", "Productos", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.id)
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
+}

@@ -1,0 +1,44 @@
+﻿@model  sistemadeCatalogo_Everyday_technology_.Models.Producto
+@{ ViewBag.Title = "Editar producto"; }
+
+<h2>Editar producto</h2>
+
+@using (Html.BeginForm("Edit", "Productos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.id)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Codigo, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Codigo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Codigo, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Nombre, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Descripcion, new { @class = "form-label" })
+        @Html.TextAreaFor(m => m.Descripcion, 3, 40, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Precio, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Precio, new { @class = "form-control", type = "number", step = "0.01" })
+        @Html.ValidationMessageFor(m => m.Precio, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Imagen actual</label><br />
+        <img src="~/Content/Imagenes/@Model.Imagen" style="width:120px;" class="mb-2" /><br />
+        <input type="file" name="archivoImagen" class="form-control" accept="image/*" />
+        <small class="text-muted">Déjalo vacío para conservar la imagen actual.</small>
+        @Html.ValidationMessageFor(m => m.Imagen, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
+}
+
+@section Scripts { @Scripts.Render("~/bundles/jqueryval") }

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<sistemadeCatalogo_Everyday_technology_.Models.Producto>
+@{ ViewBag.Title = "Inventario de productos"; }
+
+<h2>Inventario de productos</h2>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+<p><a href="@Url.Action("Create")" class="btn btn-primary">Nuevo producto</a></p>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td><img src="~/Content/Imagenes/@p.Imagen" alt="@p.Nombre" style="width:70px;height:70px;object-fit:cover;" /></td>
+                <td>@p.Codigo</td>
+                <td>@p.Nombre</td>
+                <td>@p.Descripcion</td>
+                <td>@p.Precio.ToString("C")</td>
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new { id = p.id }, new { @class = "btn btn-sm btn-info" })
+                    @Html.ActionLink("Editar", "Edit", new { id = p.id }, new { @class = "btn btn-sm btn-warning" })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = p.id }, new { @class = "btn btn-sm btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
