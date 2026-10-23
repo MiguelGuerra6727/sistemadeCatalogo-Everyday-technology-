@@ -1,0 +1,47 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.16 Chrome/132.0.6834.196 Electron/34.2.0 Safari/537.36" version="26.0.16" pages="3">
+  <diagram name="ideaPrincipal" id="67iIc0i3e-h5CKZ0vS70">
+    <mxGraphModel dx="1747" dy="1632" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cnFE_0CRObbN298yR0gk-1" value="PROYECTO DE PROGRAMACION 2&lt;div&gt;Implementacion de un sistema de inventario en ASP.NET&lt;/div&gt;&lt;div&gt;en una microempresa de repuestos de computadoras&amp;nbsp;&lt;/div&gt;&lt;div&gt;&quot;Everyday technology&quot;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="175" y="-165" width="330" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cnFE_0CRObbN298yR0gk-2" value="Administrador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="120" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cnFE_0CRObbN298yR0gk-3" value="Cliente&amp;nbsp;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="120" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cnFE_0CRObbN298yR0gk-4" value="SECCION CLIENTE&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="590" y="78" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cnFE_0CRObbN298yR0gk-5" value="SECCION ADMINISTRACION" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-40" y="78" width="180" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="b3R_gqV_3FsilLI4uzmk" name="Seccion administracion">
+    <mxGraphModel dx="1104" dy="556" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="YosFTSQlN7LOJ7q90RgK-1" value="Administrador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="102" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YosFTSQlN7LOJ7q90RgK-2" value="SECCION ADMINISTRACION" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="290" y="60" width="180" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="bk1B-UAgl5nP75UPkfkv" name="Seccion cliente">
+    <mxGraphModel dx="1104" dy="556" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
