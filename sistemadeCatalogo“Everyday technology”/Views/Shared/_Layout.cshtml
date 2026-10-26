@@ -13,7 +13,7 @@
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
             <!--Inicip para colocar logo-->
-            <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Productos")">
+            <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Catalogo")">
                 <img src="~/Content/Imagenes/Logo.JPG.jpg" alt="Logo" style="height:35px;" class="me-2" />
                 <span>Repuestos PC</span>
 
@@ -24,9 +24,23 @@
             </button>
                 
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                  
-                    <li>@Html.ActionLink("Productos", "Index", "Productos", new { area = "" }, new { @class = "nav-link" })</li>
+                <ul class="navbar-nav ms-auto">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item"><span class="navbar-text me-3">Hola, @User.Identity.Name</span></li>
+                        <li class="nav-item">
+                            @using (Html.BeginForm("Logout", "Cuenta", FormMethod.Post, new { id = "formLogout" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">Cerrar sesión</button>
+                            }
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">@Html.ActionLink("Iniciar sesión", "Login", "Cuenta", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Crear cuenta", "Registro", "Cuenta", null, new { @class = "nav-link" })</li>
+                    }
                 </ul>
             </div>
         </div>

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace sistemadeCatalogo_Everyday_technology_.Models
+namespace sistemadeCatalogo_Everyday_technology_.ViewModels
 {
     public class LoginViewModel
     {

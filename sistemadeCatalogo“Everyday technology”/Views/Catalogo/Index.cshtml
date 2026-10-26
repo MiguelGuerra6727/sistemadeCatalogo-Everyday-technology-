@@ -1,0 +1,25 @@
+﻿@model IEnumerable<sistemadeCatalogo_Everyday_technology_.Models.Seccion>
+@{ ViewBag.Title = "Catálogo"; }
+
+<h1 class="mb-4">Catálogo</h1>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var s in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                @if (!string.IsNullOrEmpty(s.Imagen))
+                {
+                    <img src="~/Content/Imagenes/@s.Imagen" class="card-img-top" alt="@s.Nombre" />
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@s.Nombre</h5>
+                    <p class="card-text">@s.Descripcion</p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    @Html.ActionLink("Ver productos", "Seccion", "Catalogo", new { id = s.Id }, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+    }
+</div>

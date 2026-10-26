@@ -1,0 +1,9 @@
+﻿@model sistemadeCatalogo_Everyday_technology_.Models.Seccion
+@{ ViewBag.Title = Model.Nombre; }
+
+<h2>@Model.Nombre</h2>
+<p class="text-muted">@Model.Descripcion</p>
+
+<div class="alert alert-info">Los productos de esta sección estarán disponibles pronto.</div>
+
+@Html.ActionLink("Volver al catálogo", "Index", "Catalogo", null, new { @class = "btn btn-secondary" })
