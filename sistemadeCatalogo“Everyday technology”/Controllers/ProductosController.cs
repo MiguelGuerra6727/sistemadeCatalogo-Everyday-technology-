@@ -5,15 +5,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 
 namespace sistemadeCatalogo_Everyday_technology_.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductosController : Controller
     {
+        private void CargarSecciones(int? seleccionada = null)
+        {
+            ViewBag.Secciones = new SelectList(SeccionRepositorio.ObtenerTodas(), "id", "nombre", seleccionada);
+        }
         private static readonly string[] ExtensionesPermitidas = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+      
         // GET: Productos
         public ActionResult Index()
         {
@@ -33,7 +38,8 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         // Crear producto Get
         public ActionResult Create()
         {
-            return View();
+            CargarSecciones();
+            return View(new Producto());
         }
 
         //  ProductosCreate post
@@ -41,14 +47,23 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Producto producto, HttpPostedFileBase archivoImagen)
         {
-            if (ProductoRepositorio.ExisteCodigo(producto.Codigo))
-                ModelState.AddModelError("Codigo","Ya existe un producto con ese código.");
+            if (!string.IsNullOrWhiteSpace(producto.Codigo) && ProductoRepositorio.ExisteCodigo(producto.Codigo))
+                ModelState.AddModelError("Codigo", "Ya existe un producto con este codigo, coloque otro porfavor");
+
+
+            if (SeccionRepositorio.ObtenerPorId(producto.SeccionId) == null)
+                ModelState.AddModelError("SeccionId", "Elige una seccion valida porfavor");
 
             string errorImagen;
             if (!ValidarImagen(archivoImagen, out errorImagen))
                 ModelState.AddModelError("Imagen", errorImagen);
 
-            if (!ModelState.IsValid) return View(producto);
+            if (!ModelState.IsValid)
+            {
+                CargarSecciones(producto.SeccionId);
+                return View(producto);
+            }
+      
 
             producto.Imagen = GuardarImagen(archivoImagen) ?? "sin-imagen.png";
             ProductoRepositorio.Agregar(producto);
@@ -62,10 +77,12 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var producto = ProductoRepositorio.ObtnerPorId(id.Value);
             if (producto == null) return HttpNotFound();
+
+            CargarSecciones(producto.SeccionId);
             return View(producto);
         }
 
-        // POST: Productos edutar
+        // POST: Productos editar
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Producto producto, HttpPostedFileBase archivoImagen)
@@ -73,8 +90,11 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
             var original = ProductoRepositorio.ObtnerPorId(producto.id);
             if (original == null) return HttpNotFound();
 
-            if (ProductoRepositorio.ExisteCodigo(producto.Codigo, producto.id))
+            if (!string.IsNullOrWhiteSpace(producto.Codigo) && ProductoRepositorio.ExisteCodigo(producto.Codigo, producto.id))
                 ModelState.AddModelError("Codigo", "Ya existe otro producto con ese código.");
+
+            if (SeccionRepositorio.ObtenerPorId(producto.SeccionId) == null)
+                ModelState.AddModelError("SeccionId", "Elige una seccion variada");
 
             string errorImagen;
             if (!ValidarImagen(archivoImagen, out errorImagen))
@@ -83,6 +103,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
             if (!ModelState.IsValid)
             {
                 producto.Imagen = original.Imagen;
+                CargarSecciones(producto.SeccionId);
                 return View(producto);
             }
 

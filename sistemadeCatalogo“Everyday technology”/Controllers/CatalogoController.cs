@@ -1,4 +1,5 @@
 ﻿using sistemadeCatalogo_Everyday_technology_.Data;
+using sistemadeCatalogo_Everyday_technology_.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,18 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         {
             return View(SeccionRepositorio.ObtenerTodas());
         }
-        //Catalogo Seccion
+        //Prodcutos
         public ActionResult Seccion(int id)
         {
             var seccion = SeccionRepositorio.ObtenerPorId(id);
-            if (seccion == null)
-                return HttpNotFound();
-            return View(seccion);
+            if (seccion == null) return HttpNotFound();
+
+            var modelo = new SeccionProductosViewModel
+            {
+                seccion = seccion,
+                Productos = ProductoRepositorio.ObtenerPorSeccion(id)
+            };
+            return View(modelo);
         }
     }
 }

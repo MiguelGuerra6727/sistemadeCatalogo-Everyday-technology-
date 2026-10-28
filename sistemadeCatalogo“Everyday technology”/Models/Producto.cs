@@ -11,27 +11,30 @@ namespace sistemadeCatalogo_Everyday_technology_.Models
     {
         public int id { get; set; }
 
-        [Required(ErrorMessage= "Coloca el codigo del producto")]
+        [Required(ErrorMessage = "Coloca el codigo del producto")]
         [StringLength(20)]
-        [Display(Name ="Codigo")]
+        [Display(Name = "Codigo")]
+        public string Codigo { get; set; }
 
-        public string Codigo {  get; set; }
-
-        [Required(ErrorMessage ="El producto tiene que llevar u nombre")]
+        [Required(ErrorMessage = "El producto tiene que llevar un nombre")]
         [StringLength(1000)]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage ="El producto tiene que llevar descripcion")]
+        [Required(ErrorMessage = "El producto tiene que llevar descripcion")]
         [StringLength(1200)]
-        [Display(Name ="Descripcion")]
+        [Display(Name = "Descripcion")]
         public string Descripcion { get; set; }
 
-        [Required(ErrorMessage ="El producto tiene que llevar un precio!")]
-        [Range(0.1, 100000, ErrorMessage ="El precio tiene que ser mayor que $0.00")]
+        [Required(ErrorMessage = "El producto tiene que llevar un precio!")]
+        [Range(0.1, 100000, ErrorMessage = "El precio tiene que ser mayor que $0.00")]
         [DataType(DataType.Currency)]
         public decimal Precio { get; set; }
-        [Display(Name ="Imagen")]
+
+        [Display(Name = "Imagen")]
         public string Imagen { get; set; }
 
-        }
+        [Range(1, int.MaxValue, ErrorMessage = "Elige una sección")]
+        [Display(Name = "Sección")]
+        public int SeccionId { get; set; }
     }
+}

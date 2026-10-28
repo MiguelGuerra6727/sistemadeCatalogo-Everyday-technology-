@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title"Everyday technology" </title>
+    <title>@ViewBag.Title - Everyday technology </title>
     <link rel="icon" type="image/x-icon" href="~/Logo.JPG.ico" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -24,9 +24,13 @@
             </button>
                 
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     @if (User.Identity.IsAuthenticated)
                     {
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">@Html.ActionLink("Inventario", "Index", "Productos", null, new { @class = "nav-link" })</li>
+                        }
                         <li class="nav-item"><span class="navbar-text me-3">Hola, @User.Identity.Name</span></li>
                         <li class="nav-item">
                             @using (Html.BeginForm("Logout", "Cuenta", FormMethod.Post, new { id = "formLogout" }))
@@ -38,8 +42,7 @@
                     }
                     else
                     {
-                        <li class="nav-item">@Html.ActionLink("Iniciar sesión", "Login", "Cuenta", null, new { @class = "nav-link" })</li>
-                        <li class="nav-item">@Html.ActionLink("Crear cuenta", "Registro", "Cuenta", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Administrador", "Login", "Cuenta", null, new { @class = "btn btn-outline-light btn-sm" })</li>
                     }
                 </ul>
             </div>

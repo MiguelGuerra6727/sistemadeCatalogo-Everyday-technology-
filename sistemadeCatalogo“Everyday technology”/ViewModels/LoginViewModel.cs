@@ -18,7 +18,5 @@ namespace sistemadeCatalogo_Everyday_technology_.ViewModels
         [Display(Name= "Password")]
         public string Password { get; set; }
 
-        [Display(Name ="Recordarme")]
-        public bool Recordarme { get; set; }
     }
 }

@@ -1,72 +1,74 @@
 ﻿using sistemadeCatalogo_Everyday_technology_.Models;
 using System;
 using System.Collections.Generic;
-using System.EnterpriseServices;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography;
-using System.Security.Policy;
 using System.Web;
 
 namespace sistemadeCatalogo_Everyday_technology_.Data
 {
     public class UsuarioRepositorio
     {
-        private static readonly List<Usuarios> _usuarios = new List<Usuarios>();
-        private static int _siguienteId = 1;
+        private static readonly List<Usuario> _Usuarios = new List<Usuario>();
         private static readonly object _lock = new object();
-        public static bool ExisteCorreo(string Correo)
-        {
-            lock (_lock)
-            {
-                return _usuarios.Any(u => u.Correo.ToLower() == Correo.ToLower());
-            }
-        }
-        // Para el registro
-        public static void Registrar(string Nombre, string Correo, string password)
-        {
-            var salt = GeneraSalt();
-            lock (_lock)
-            {
-                _usuarios.Add(new Usuarios
-                {
-                    Id = _siguienteId++,
-                    Nombre = Nombre,
-                    Correo = Correo.Trim(),
-                    Salt = Convert.ToBase64String(salt),
-                    PasswordHash = Hash(password, salt),
-                    Rol = "Cliente"
-                });
-            }
-        }
-        //Validar usuarios
-        public static Usuarios Validar(string Correo, string password)
-        {
-            Usuarios usuarios;
-            lock (_lock)
-            {
-                usuarios = _usuarios.FirstOrDefault(u => u.Correo.ToLower() == Correo.Trim().ToLower());
-            }
-            if (usuarios == null) return null;
 
-            var hash = Hash(password, Convert.FromBase64String(usuarios.Salt));
-            return hash == usuarios.PasswordHash ? usuarios : null;
-        }
-        private static byte[] GeneraSalt()
+        // Creaccion del administrador 
+        static UsuarioRepositorio()
         {
-            var salt = new byte[16];
-            using (var rng = new RNGCryptoServiceProvider()) { rng.GetBytes(salt); }
-            return salt;
+            byte[] sal = GenerarSal();
+            _Usuarios.Add(new Usuario
+            {
+                Id = 1,
+                Nombre ="Administrador", //para mientras 
+                Correo = "lasd9@gmail.com",
+                Salt = Convert.ToBase64String(sal),
+                PasswordHash = Hash("Admin67", sal),
+                Rol = "Admin"
+            });
         }
-        // la cosa del hash
+        //Fin de la creacion del admin 
 
-        private static string Hash(string password, byte[] salt)
+        public static Usuario Validar(string correo, string password) 
         {
-            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000))
+            if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrEmpty(password)) return null;
+
+
+            Usuario usuario;
+            lock (_lock)
+            {
+                usuario = _Usuarios.FirstOrDefault(u =>
+                string.Equals(u.Correo, correo.Trim(), StringComparison.OrdinalIgnoreCase));
+            }
+            if (usuario == null) return null;
+
+            byte[] sal = Convert.FromBase64String(usuario.Salt);
+            byte[] Calculado = Convert.FromBase64String(Hash(password,sal));
+            byte[] Guardado = Convert.FromBase64String(usuario.PasswordHash);
+
+            return ComparacionSegura(Calculado, Guardado) ? usuario : null;
+        }
+
+        private static byte[] GenerarSal()
+        {
+            var sal = new byte[16];
+            using (var rng = new RNGCryptoServiceProvider()) { rng.GetBytes(sal); }
+            return sal;
+        }
+
+        private static string Hash(string password, byte[] sal)
+        {
+            using(var pbkdf2 = new Rfc2898DeriveBytes(password, sal, 100000))
             {
                 return Convert.ToBase64String(pbkdf2.GetBytes(32));
-
             }
         }
+        private static bool ComparacionSegura(byte[] a, byte[]b )
+        {
+            if (a.Length != b.Length) return false;
+            int diferencia = 0;
+            for (int i = 0; i < a.Length; i++) diferencia |= a[i] ^ b[i];
+            return diferencia == 0;
+        }
+
     }
 }

@@ -1,9 +1,36 @@
-﻿@model sistemadeCatalogo_Everyday_technology_.Models.Seccion
-@{ ViewBag.Title = Model.Nombre; }
+﻿@model sistemadeCatalogo_Everyday_technology_.ViewModels.SeccionProductosViewModel
+@{
+    ViewBag.Title = Model.seccion.Nombre;
+}
 
-<h2>@Model.Nombre</h2>
-<p class="text-muted">@Model.Descripcion</p>
+<h2 class="mt-4">@Model.seccion.Nombre</h2>
+<p class="text-muted">@Model.seccion.Descripcion</p>
+<p>@Html.ActionLink("← Volver al catálogo", "Index", "Catalogo")</p>
 
-<div class="alert alert-info">Los productos de esta sección estarán disponibles pronto.</div>
-
-@Html.ActionLink("Volver al catálogo", "Index", "Catalogo", null, new { @class = "btn btn-secondary" })
+@if (Model.Productos.Count == 0)
+{
+    <div class="alert alert-info">Aún no hay productos en esta sección.</div>
+}
+else
+{
+    <div class="row">
+        @foreach (var p in Model.Productos)
+        {
+            var imagen = string.IsNullOrEmpty(p.Imagen) ? "sin-imagen.png" : p.Imagen;
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="@Url.Content("~/Content/Imagenes/" + imagen)" alt="@p.Nombre"
+                         class="card-img-top" style="height:200px; object-fit:contain; padding:10px;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Nombre</h5>
+                        <p class="text-muted mb-1">Código: @p.Codigo</p>
+                        <p class="card-text">@p.Descripcion</p>
+                    </div>
+                    <div class="card-footer">
+                        <strong>$@p.Precio.ToString("N2")</strong>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
