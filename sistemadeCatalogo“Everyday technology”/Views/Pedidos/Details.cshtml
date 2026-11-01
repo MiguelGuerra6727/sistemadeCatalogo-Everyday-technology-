@@ -1,0 +1,85 @@
+﻿@model sistemadeCatalogo_Everyday_technology_.Models.pedido
+@using sistemadeCatalogo_Everyday_technology_.Models
+@{
+    ViewBag.Title = "Pedido #" + Model.Id;
+}
+
+<h2 class="mt-4">Pedido #@Model.Id</h2>
+
+@if (TempData["PedidoMensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["PedidoMensaje"]</div>
+}
+@if (TempData["PedidoError"] != null)
+{
+    <div class="alert alert-warning">@TempData["PedidoError"]</div>
+}
+
+<dl class="row">
+    <dt class="col-sm-3">Fecha</dt>
+    <dd class="col-sm-9">@Model.Fecha.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt class="col-sm-3">Cliente</dt>
+    <dd class="col-sm-9">@Model.Cliente</dd>
+    <dt class="col-sm-3">Teléfono</dt>
+    <dd class="col-sm-9">@Model.Telefono</dd>
+    <dt class="col-sm-3">Lugar de envío</dt>
+    <dd class="col-sm-9">@Model.DireccionEnvio</dd>
+    <dt class="col-sm-3">Estado</dt>
+    <dd class="col-sm-9">@Model.Estado</dd>
+</dl>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model.Items)
+        {
+            <tr>
+                <td>@i.Codigo</td>
+                <td>@i.Nombre</td>
+                <td>$@i.PrecioUnitario.ToString("N2")</td>
+                <td>@i.Cantidad</td>
+                <td>$@i.SubTotal ToString("N2")</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4" class="text-end"><strong>Total:</strong></td>
+            <td><strong>$@Model.Total.ToString("N2")</strong></td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="d-flex gap-2 mb-4">
+    <a href="@Url.Action("Index", "Pedidos")" class="btn btn-outline-secondary">Volver al historial</a>
+    @if (Model.Estado == EstadoPedido.Pendiente)
+    {
+        using (Html.BeginForm("CambiarEstado", "Pedidos", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="estado" value="@EstadoPedido.Entregado" />
+            <input type="hidden" name="returnUrl" value="@Request.RawUrl" />
+            <button type="submit" class="btn btn-success">Entregado</button>
+        }
+        using (Html.BeginForm("CambiarEstado", "Pedidos", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="estado" value="@EstadoPedido.Cancelado" />
+            <input type="hidden" name="returnUrl" value="@Request.RawUrl" />
+            <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Estas seguro de cancelar este pedido? Las unidades volverán al stock.');">
+                Cancelado
+            </button>
+        }
+    }
+</div>

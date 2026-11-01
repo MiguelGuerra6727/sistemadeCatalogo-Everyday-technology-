@@ -16,20 +16,27 @@
             <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Catalogo")">
                 <img src="~/Content/Imagenes/Logo.JPG.jpg" alt="Logo" style="height:35px;" class="me-2" />
                 <span>Repuestos PC</span>
-
             </a>
+            <!---Fin de cambio de logo-->
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-                
+
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <!--Voy a cambiar este-->
                 <ul class="navbar-nav ms-auto align-items-center">
+                    @if (!User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">@Html.Action("Contador", "Carrito")</li>
+                    }
+
                     @if (User.Identity.IsAuthenticated)
                     {
                         if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">@Html.ActionLink("Inventario", "Index", "Productos", null, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Compras", "Index", "Pedidos", null, new { @class = "nav-link" })</li>
                         }
                         <li class="nav-item"><span class="navbar-text me-3">Hola, @User.Identity.Name</span></li>
                         <li class="nav-item">
@@ -48,14 +55,22 @@
             </div>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <!--Aqui iba lo que borre
-              <footer>
-        <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-    </footer>-->
-    </div>
+    <div class="alert alert-success mt-3">@TempData["CarritoMensaje"]</div>
+    <!---Cambio para la vista de mensaje tiempo-->
+    @if (TempData["CarritoMensaje"] != null)
+    {
+
+    }
+    @if (TempData["CarritoError"] != null)
+    {
+        <div class="alert alert-warning mt-3">@TempData["CarritoError"]</div>
+    }
+   
+<div class="container body-content">
+    <!---Cambio para la vista de mensaje tiempo-->
+    @RenderBody()
+    <hr />
+</div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

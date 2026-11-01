@@ -1,0 +1,6 @@
+﻿@model int
+<a class="nav-link d-flex align-items-center" href="@Url.Action("Index", "Carrito")" title="Mi carrito">
+    <img src="@Url.Content("~/Content/Imagenes/Carrito.jpg")" alt="Carrito" style="height:28px;"
+         onerror="this.outerHTML='&#128722;'" />
+    <span class="badge bg-danger ms-1">@Model</span>
+</a>

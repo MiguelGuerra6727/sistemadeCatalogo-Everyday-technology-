@@ -1,4 +1,5 @@
 ﻿@model sistemadeCatalogo_Everyday_technology_.ViewModels.SeccionProductosViewModel
+@using sistemadeCatalogo_Everyday_technology_.Data
 @{
     ViewBag.Title = Model.seccion.Nombre;
 }
@@ -27,7 +28,38 @@ else
                         <p class="card-text">@p.Descripcion</p>
                     </div>
                     <div class="card-footer">
-                        <strong>$@p.Precio.ToString("N2")</strong>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong>$@p.Precio.ToString("N2")</strong>
+                            @if (p.Stock == 0)
+                            {
+                                <span class="badge bg-danger">Agotado</span>
+                            }
+                            else if (p.Stock <= ProductoRepositorio.StockMinimo)
+                            {
+                                <span class="badge bg-warning text-dark">¡Stock bajo! Quedan @p.Stock</span>
+                            }
+                            else
+                            {
+                                <small class="text-muted">Disponibles: @p.Stock</small>
+                            }
+                        </div>
+
+                        @if (p.Stock > 0)
+                        {
+                            using (Html.BeginForm("Agregar", "Carrito", FormMethod.Post, new { @class = "d-flex gap-2" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@p.id" />
+                                <input type="hidden" name="returnUrl" value="@Request.RawUrl" />
+                                <input type="number" name="cantidad" value="1" min="1" max="@p.Stock"
+                                       class="form-control form-control-sm" style="width:80px;" />
+                                <button type="submit" class="btn btn-primary btn-sm flex-grow-1">Agregar al carrito</button>
+                            }
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-secondary btn-sm w-100" disabled>Agotado</button>
+                        }
                     </div>
                 </div>
             </div>

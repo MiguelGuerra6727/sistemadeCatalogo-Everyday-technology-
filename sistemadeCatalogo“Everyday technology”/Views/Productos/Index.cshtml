@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<sistemadeCatalogo_Everyday_technology_.Models.Producto>
+@using sistemadeCatalogo_Everyday_technology_.Data
 @{ ViewBag.Title = "Inventario de productos"; }
 
 <h2>Inventario de productos</h2>
@@ -16,6 +17,7 @@
             <th>Imagen</th>
             <th>Código</th>
             <th>Nombre</th>
+            <th>Stock</th>
             <th>Descripción</th>
             <th>Precio</th>
             <th>Acciones</th>
@@ -28,6 +30,18 @@
                 <td><img src="~/Content/Imagenes/@p.Imagen" alt="@p.Nombre" style="width:70px;height:70px;object-fit:cover;" /></td>
                 <td>@p.Codigo</td>
                 <td>@p.Nombre</td>
+                <td>@p.Stock
+                <td>
+                    @p.Stock
+                    @if (p.Stock == 0)
+                    {
+                        <span class="badge bg-danger ms-1">Agotado</span>
+                    }
+                    else if (p.Stock <= ProductoRepositorio.StockMinimo)
+                    {
+                        <span class="badge bg-warning text-dark ms-1">Hay poco stock</span>
+                    }
+                </td>
                 <td>@p.Descripcion</td>
                 <td>@p.Precio.ToString("C")</td>
                 <td>

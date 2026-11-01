@@ -36,5 +36,10 @@ namespace sistemadeCatalogo_Everyday_technology_.Models
         [Range(1, int.MaxValue, ErrorMessage = "Elige una sección")]
         [Display(Name = "Sección")]
         public int SeccionId { get; set; }
+
+        [Range(0,1000000, ErrorMessage ="Tienes que colocar stock (No puedes dejarlo en 0)")]
+        [Display(Name ="Stock")]
+        public int Stock { get; set; }
+    
     }
 }

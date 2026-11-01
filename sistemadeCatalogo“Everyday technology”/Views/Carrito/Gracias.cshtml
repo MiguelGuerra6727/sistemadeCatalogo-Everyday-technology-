@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Compra realizada";
+}
+
+<div class="text-center mt-5">
+    <h2>¡Gracias por tu compra!</h2>
+    <p class="lead">Tu pedido <strong>#@ViewBag.Numero</strong> fue registrado por un total de <strong>$@(((decimal)ViewBag.Total).ToString("N2"))</strong>.</p>
+    <p class="text-muted">Nos pondremos en contacto contigo para coordinar el envío.</p>
+    <a href="@Url.Action("Index", "Catalogo")" class="btn btn-primary">Volver al catálogo</a>
+</div>

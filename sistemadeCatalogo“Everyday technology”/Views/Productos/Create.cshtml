@@ -20,6 +20,13 @@
         @Html.TextBoxFor(m => m.Codigo, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Codigo, "", new { @class = "text-danger" })
     </div>
+    <!--Este es el de stock-->
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Stock)
+        @Html.TextBoxFor(m => m.Stock, new { @class = "form-control", type = "number", min = "0" })
+        @Html.ValidationMessageFor(m => m.Stock, "", new { @class = "text-danger" })
+    </div>
+    <!--Este es el cierre de stock-->
     <div class="mb-3">
         @Html.LabelFor(m => m.Nombre, new { @class = "form-label" })
         @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })

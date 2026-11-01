@@ -26,6 +26,11 @@
         @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
     </div>
     <div class="mb-3">
+        @Html.LabelFor(m => m.Stock)
+        @Html.TextBoxFor(m => m.Stock, new { @class = "form-control", type = "number", min = "0" })
+        @Html.ValidationMessageFor(m => m.Stock, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
         @Html.LabelFor(m => m.Descripcion, new { @class = "form-label" })
         @Html.TextAreaFor(m => m.Descripcion, 3, 40, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })

@@ -1,0 +1,52 @@
+﻿@model sistemadeCatalogo_Everyday_technology_.ViewModels.CheckoutViewModels
+@{
+    ViewBag.Title = "Finalizar compra";
+}
+
+<h2 class="mt-4">Finalizar compra</h2>
+<p class="text-muted">Esto es una simulación: no se cobra nada.</p>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        @using (Html.BeginForm("Checkout", "Carrito", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Nombre)
+                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Telefono)
+                @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Telefono, "", new { @class = "text-danger" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m.DireccionEnvio)
+                @Html.TextAreaFor(m => m.DireccionEnvio, 3, 40, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DireccionEnvio, "", new { @class = "text-danger" })
+            </div>
+            <button type="submit" class="btn btn-success">Pagar</button>
+            <a href="@Url.Action("Index", "Carrito")" class="btn btn-outline-secondary">Volver al carrito</a>
+        }
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <h5>Resumen</h5>
+        <table class="table table-sm">
+            @foreach (var l in Model.Carrito.Lineas)
+            {
+                <tr>
+                    <td>@l.Producto.Nombre × @l.Cantidad</td>
+                    <td class="text-end">$@l.Subtotal.ToString("N2")</td>
+                </tr>
+            }
+            <tr>
+                <td><strong>Total</strong></td>
+                <td class="text-end"><strong>$@Model.Carrito.Total.ToString("N2")</strong></td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -8,51 +8,52 @@ namespace sistemadeCatalogo_Everyday_technology_.Data
 {
     public class ProductoRepositorio
     {
-        // Lista estática mientras la wen hace la base 
+        // Esta parte me avisa del stock cuando es insuficiente (Bajo pues)
+        public const int StockMinimo = 5;
+
         private static readonly List<Producto> _Productos = new List<Producto>
         {
             // 1- Memorias RAM
             new Producto { id = 1, SeccionId = 1, Codigo = "RAM-001", Nombre = "Memoria RAM DDR4 8GB",
-                Descripcion = "Módulo DDR4 3200 MHz para equipos de escritorio.", Precio = 32.50m, Imagen = "sin-imagen.png" },
+                Descripcion = "Módulo DDR4 3200 MHz para equipos de escritorio.", Precio = 32.50m, Imagen = "sin-imagen.png", Stock = 20 },
             new Producto { id = 4, SeccionId = 1, Codigo = "RAM-002", Nombre = "Memoria RAM DDR4 16GB",
-                Descripcion = "Módulo DDR4 3200 MHz de 16 GB, ideal para multitarea y edición.", Precio = 58.00m, Imagen = "sin-imagen.png" },
+                Descripcion = "Módulo DDR4 3200 MHz de 16 GB, ideal para multitarea y edición.", Precio = 58.00m, Imagen = "sin-imagen.png", Stock = 12 },
             new Producto { id = 5, SeccionId = 1, Codigo = "RAM-003", Nombre = "Memoria RAM DDR5 16GB",
-                Descripcion = "Módulo DDR5 5600 MHz para plataformas de nueva generación.", Precio = 79.90m, Imagen = "sin-imagen.png" },
+                Descripcion = "Módulo DDR5 5600 MHz para plataformas de nueva generación.", Precio = 79.90m, Imagen = "sin-imagen.png", Stock = 4 },
 
             // 2- Almacenamiento
             new Producto { id = 2, SeccionId = 2, Codigo = "SSD-001", Nombre = "Disco SSD 480GB",
-                Descripcion = "Unidad de estado sólido SATA de 2.5 pulgadas.", Precio = 38.00m, Imagen = "sin-imagen.png" },
+                Descripcion = "Unidad de estado sólido SATA de 2.5 pulgadas.", Precio = 38.00m, Imagen = "sin-imagen.png", Stock = 15 },
             new Producto { id = 6, SeccionId = 2, Codigo = "SSD-002", Nombre = "SSD NVMe M.2 1TB",
-                Descripcion = "Unidad NVMe de alta velocidad para arranque rápido y juegos.", Precio = 79.00m, Imagen = "sin-imagen.png" },
+                Descripcion = "Unidad NVMe de alta velocidad para arranque rápido y juegos.", Precio = 79.00m, Imagen = "sin-imagen.png", Stock = 8 },
             new Producto { id = 7, SeccionId = 2, Codigo = "HDD-001", Nombre = "Disco duro 2TB 7200 RPM",
-                Descripcion = "Disco duro SATA de 3.5 pulgadas para almacenamiento masivo.", Precio = 64.50m, Imagen = "sin-imagen.png" },
+                Descripcion = "Disco duro SATA de 3.5 pulgadas para almacenamiento masivo.", Precio = 64.50m, Imagen = "sin-imagen.png", Stock = 0 },
 
             // 3- Fuentes de poder
             new Producto { id = 3, SeccionId = 3, Codigo = "FNT-001", Nombre = "Fuente de poder 550W",
-                Descripcion = "Fuente ATX certificada 80 Plus Bronze.", Precio = 45.90m, Imagen = "sin-imagen.png" },
+                Descripcion = "Fuente ATX certificada 80 Plus Bronze.", Precio = 45.90m, Imagen = "sin-imagen.png", Stock = 10 },
             new Producto { id = 8, SeccionId = 3, Codigo = "FNT-002", Nombre = "Fuente de poder 650W",
-                Descripcion = "Fuente ATX certificada 80 Plus Gold para equipos de gama media.", Precio = 69.00m, Imagen = "sin-imagen.png" },
+                Descripcion = "Fuente ATX certificada 80 Plus Gold para equipos de gama media.", Precio = 69.00m, Imagen = "sin-imagen.png", Stock = 5 },
             new Producto { id = 9, SeccionId = 3, Codigo = "FNT-003", Nombre = "Fuente de poder 750W modular",
-                Descripcion = "Fuente modular 80 Plus Gold con cables planos para mejor flujo de aire.", Precio = 89.90m, Imagen = "sin-imagen.png" },
+                Descripcion = "Fuente modular 80 Plus Gold con cables planos para mejor flujo de aire.", Precio = 89.90m, Imagen = "sin-imagen.png", Stock = 2 },
 
             // 4- Procesadores
             new Producto { id = 10, SeccionId = 4, Codigo = "CPU-001", Nombre = "Procesador AMD Ryzen 5 5600",
-                Descripcion = "6 núcleos y 12 hilos, socket AM4, incluye disipador.", Precio = 129.00m, Imagen = "sin-imagen.png" },
+                Descripcion = "6 núcleos y 12 hilos, socket AM4, incluye disipador.", Precio = 129.00m, Imagen = "sin-imagen.png", Stock = 9 },
             new Producto { id = 11, SeccionId = 4, Codigo = "CPU-002", Nombre = "Procesador Intel Core i5-12400F",
-                Descripcion = "6 núcleos, socket LGA1700, requiere tarjeta gráfica dedicada.", Precio = 139.00m, Imagen = "sin-imagen.png" },
+                Descripcion = "6 núcleos, socket LGA1700, requiere tarjeta gráfica dedicada.", Precio = 139.00m, Imagen = "sin-imagen.png", Stock = 14 },
             new Producto { id = 12, SeccionId = 4, Codigo = "CPU-003", Nombre = "Procesador AMD Ryzen 7 5700X",
-                Descripcion = "8 núcleos y 16 hilos, socket AM4, para trabajo y juegos exigentes.", Precio = 189.00m, Imagen = "sin-imagen.png" },
+                Descripcion = "8 núcleos y 16 hilos, socket AM4, para trabajo y juegos exigentes.", Precio = 189.00m, Imagen = "sin-imagen.png", Stock = 3 },
 
             // 5- Tarjetas gráficas
             new Producto { id = 13, SeccionId = 5, Codigo = "GPU-001", Nombre = "Tarjeta gráfica GTX 1650 4GB",
-                Descripcion = "Tarjeta de entrada para juegos en 1080p y equipos de oficina potentes.", Precio = 149.00m, Imagen = "sin-imagen.png" },
+                Descripcion = "Tarjeta de entrada para juegos en 1080p y equipos de oficina potentes.", Precio = 149.00m, Imagen = "sin-imagen.png", Stock = 7 },
             new Producto { id = 14, SeccionId = 5, Codigo = "GPU-002", Nombre = "Tarjeta gráfica RTX 3050 8GB",
-                Descripcion = "8 GB de memoria, trazado de rayos y DLSS para juegos en 1080p.", Precio = 219.00m, Imagen = "sin-imagen.png" },
+                Descripcion = "8 GB de memoria, trazado de rayos y DLSS para juegos en 1080p.", Precio = 219.00m, Imagen = "sin-imagen.png", Stock = 6 },
             new Producto { id = 15, SeccionId = 5, Codigo = "GPU-003", Nombre = "Tarjeta gráfica RX 6600 8GB",
-                Descripcion = "8 GB de memoria, excelente rendimiento por precio en 1080p.", Precio = 239.00m, Imagen = "sin-imagen.png" }
+                Descripcion = "8 GB de memoria, excelente rendimiento por precio en 1080p.", Precio = 239.00m, Imagen = "sin-imagen.png", Stock = 1 }
         };
 
-        // El id siguientes para agregar 
         private static int _siguienteid = 16;
         private static readonly object _lock = new object();
 
@@ -100,12 +101,43 @@ namespace sistemadeCatalogo_Everyday_technology_.Data
                 existente.Precio = producto.Precio;
                 existente.Imagen = producto.Imagen;
                 existente.SeccionId = producto.SeccionId;
+                existente.Stock = producto.Stock;
             }
         }
 
         public static void Eliminar(int id)
         {
             lock (_lock) { _Productos.RemoveAll(p => p.id == id); }
+        }
+
+        //  Hace un descuento en el stock de los produsctos 
+        // Devuelve null si salió bien, o el mensaje de error si algo no alcanza.
+        public static string DescontarStockLote(Dictionary<int, int> cantidades)
+        {
+            lock (_lock)
+            {
+                foreach (var par in cantidades)
+                {
+                    var p = _Productos.FirstOrDefault(x => x.id == par.Key);
+                    if (p == null) return "Un producto del carrito ya no existe.";
+                    if (par.Value > p.Stock)
+                        return p.Stock == 0
+                            ? p.Nombre + " está agotado."
+                            : "De " + p.Nombre + " solo quedan " + p.Stock + " unidades.";
+                }
+                foreach (var par in cantidades)
+                    _Productos.First(x => x.id == par.Key).Stock -= par.Value;
+                return null;
+            }
+        }
+
+        public static void ReponerStock(int id, int cantidad)
+        {
+            lock (_lock)
+            {
+                var p = _Productos.FirstOrDefault(x => x.id == id);
+                if (p != null) p.Stock += cantidad;
+            }
         }
     }
 }

@@ -1,0 +1,93 @@
+﻿@model sistemadeCatalogo_Everyday_technology_.ViewModels.CarritoViewModels
+@{
+    ViewBag.Title = "Mi carrito";
+    bool hayProblema = Model.Lineas.Any(l => l.Cantidad > l.Producto.Stock);
+}
+
+<h2 class="mt-4">Mi carrito</h2>
+
+@if (Model.Lineas.Count == 0)
+{
+    <div class="alert alert-info">Tu carrito está vacío.</div>
+    <a href="@Url.Action("Index", "Catalogo")" class="btn btn-primary">Ver catálogo</a>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var l in Model.Lineas)
+                {
+                    var imagen = string.IsNullOrEmpty(l.Producto.Imagen) ? "sin-imagen.png" : l.Producto.Imagen;
+                    <tr>
+                        <td style="width:80px;">
+                            <img src="@Url.Content("~/Content/Imagenes/" + imagen)" alt="@l.Producto.Nombre"
+                                 style="height:60px; width:60px; object-fit:contain;" />
+                        </td>
+                        <td>
+                            @l.Producto.Nombre<br />
+                            <small class="text-muted">@l.Producto.Codigo</small>
+                            @if (l.Cantidad > l.Producto.Stock)
+                            {
+                                <div class="text-danger small">Solo quedan @l.Producto.Stock disponibles, ajusta la cantidad.</div>
+                            }
+                        </td>
+                        <td>$@l.Producto.Precio.ToString("N2")</td>
+                        <td>
+                            @using (Html.BeginForm("Actualizar", "Carrito", FormMethod.Post, new { @class = "d-flex gap-2" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@l.Producto.id" />
+                                <input type="number" name="cantidad" value="@l.Cantidad" min="1" max="@l.Producto.Stock"
+                                       class="form-control form-control-sm" style="width:80px;" />
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">Actualizar</button>
+                            }
+                        </td>
+                        <td>$@l.Subtotal.ToString("N2")</td>
+                        <td>
+                            @using (Html.BeginForm("Quitar", "Carrito", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@l.Producto.id" />
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Quitar</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                    <td colspan="2"><strong>$@Model.Total.ToString("N2")</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="d-flex gap-2 mb-4">
+        <a href="@Url.Action("Index", "Catalogo")" class="btn btn-outline-secondary">Seguir comprando</a>
+        @using (Html.BeginForm("Vaciar", "Carrito", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-danger">Vaciar carrito</button>
+        }
+        @if (hayProblema)
+        {
+            <button type="button" class="btn btn-success" disabled>Proceder a pagar</button>
+        }
+        else
+        {
+            <a href="@Url.Action("Checkout", "Carrito")" class="btn btn-success">Proceder a pagar</a>
+        }
+    </div>
+}
