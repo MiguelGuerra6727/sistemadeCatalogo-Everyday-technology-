@@ -27,14 +27,14 @@ namespace sistemadeCatalogo_Everyday_technology_.Data
         {
             lock (_lock) { return _pedidos.OrderByDescending(p => p.Fecha).ToList(); }  
         }
-        public static pedido ObteenerPorId(int id)
+        public static pedido ObtenerPorId(int id)
         {
             lock (_lock) { return _pedidos.FirstOrDefault(p => p.Id == id); }
         }
         //Este hace que un perdido pendiente pueda pasar de entregado o cancelado
         ////Al cencelar, las unidades tienen que volver al stock
 
-        public static bool CambiarEstao(int id, string nuevoEstado)
+        public static bool CambiarEstado(int id, string nuevoEstado)
         {
             lock (_lock)
             {

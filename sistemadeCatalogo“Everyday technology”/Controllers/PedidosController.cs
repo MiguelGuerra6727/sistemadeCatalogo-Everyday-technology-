@@ -1,15 +1,15 @@
-﻿using System;
+﻿
 using sistemadeCatalogo_Everyday_technology_.Models;
 using sistemadeCatalogo_Everyday_technology_.Data;
 using sistemadeCatalogo_Everyday_technology_.ViewModels;
-using System.Collections.Generic;
+
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
+
 
 namespace sistemadeCatalogo_Everyday_technology_.Controllers
 {
-    [Authorize(Roles = "Admin67")]
+    [Authorize(Roles = "Admin")]
     public class PedidosController : Controller
     {
         // GET: Pedidos
@@ -23,11 +23,10 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
             };
             return View(vm);
         }
-
         public ActionResult Details(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(400);
-            var pedido = PedidoRepositorio.ObteenerPorId(id.Value);
+            var pedido = PedidoRepositorio.ObtenerPorId(id.Value);
             if (pedido == null) return HttpNotFound();
             return View(pedido);
         }
@@ -36,18 +35,18 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CambiarEstado(int id, string estado, string returnUrl)
         { //El cabmbio de estado
-            var pedido = PedidoRepositorio.ObteenerPorId(id);
+            var pedido = PedidoRepositorio.ObtenerPorId(id);
             if (pedido == null) return HttpNotFound();
         
-            if(PedidoRepositorio.CambiarEstao(id, estado))
+            if(PedidoRepositorio.CambiarEstado(id, estado))
             {
-                TempData["PedidpMensaje"] = estado == EstadoPedido.Entregado
-                    ?"pedido #" + id + "Entregado correctamente"
-                    : "pedido #" + id + "Cancelado. los productos volvieron al stock";
+                TempData["PedidoMensaje"] = estado == EstadoPedido.Entregado
+                    ?"pedido #" + id + " Entregado correctamente "
+                    : "pedido #" + id + " Cancelado. los productos volvieron al stock ";
             }
             else
             {
-                TempData["pedidoError"] = "No se pudo cambiar el estado: el pedido ya fue entregado o cancelado";
+                TempData["pedidoError"] = " No se pudo cambiar el estado: el pedido ya fue entregado o cancelado ";
             }
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);
@@ -55,5 +54,5 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         }// fin del cambio de estado 
        
         
-    }
+    } // fin de administrador
 }
