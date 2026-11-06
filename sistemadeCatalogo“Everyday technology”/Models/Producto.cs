@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 
 namespace sistemadeCatalogo_Everyday_technology_.Models
 {
+  
     public class Producto
     {
+        [Key] //Significa que es la llave primaria (Si lo leen aprendancelo )
         public int id { get; set; }
 
         [Required(ErrorMessage = "Coloca el codigo del producto")]
         [StringLength(20)]
+        [Index("Ix_Productos_Codigo", IsUnique =true)]
         [Display(Name = "Codigo")]
         public string Codigo { get; set; }
 
@@ -31,15 +35,23 @@ namespace sistemadeCatalogo_Everyday_technology_.Models
         public decimal Precio { get; set; }
 
         [Display(Name = "Imagen")]
+        [StringLength(200)]
         public string Imagen { get; set; }
+
+        [Range(0, 1000000, ErrorMessage = "Tienes que colocar stock (No puedes dejarlo en 0)")]
+        [Display(Name = "Stock")]
+        public int Stock { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Elige una sección")]
         [Display(Name = "Sección")]
         public int SeccionId { get; set; }
 
-        [Range(0,1000000, ErrorMessage ="Tienes que colocar stock (No puedes dejarlo en 0)")]
-        [Display(Name ="Stock")]
-        public int Stock { get; set; }
+        [ForeignKey("SeccionId")]
+        public virtual Seccion Seccion { get; set; }
+        
+        public bool Activo { get; set; } = true;
+
+   
     
     }
 }

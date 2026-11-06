@@ -23,7 +23,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Data
                 Correo = "lasd9@gmail.com",
                 Salt = Convert.ToBase64String(sal),
                 PasswordHash = Hash("Admin67", sal),
-                Rol = "Admin"
+                Rol = new Rol {Id = 1, Nombre="Admin" }
             });
         }
         //Fin de la creacion del admin 

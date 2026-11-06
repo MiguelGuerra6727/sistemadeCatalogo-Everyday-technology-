@@ -38,7 +38,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
             //Ticket con el reol 
 
             var ticket = new FormsAuthenticationTicket(
-                1, usuario.Correo, DateTime.Now, DateTime.Now.AddMinutes(60), false, usuario.Rol);
+                1, usuario.Correo, DateTime.Now, DateTime.Now.AddMinutes(60), false, usuario.Rol.Nombre);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))
             {
                 HttpOnly = true,
