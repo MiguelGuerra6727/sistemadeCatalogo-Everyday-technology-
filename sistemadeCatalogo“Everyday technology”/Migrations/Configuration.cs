@@ -7,6 +7,7 @@
 
     //Este lo que hace es que si quiero atualizar o agregar alguna seccion me lo cambiara en la base de datos tambien
     //para no reacerla de nuevo :o
+    //NO TOCAR EL DISIGN!!!!!!!!!!!!EASRFSSZTGZBTRZDT
     internal sealed class Configuration : DbMigrationsConfiguration<sistemadeCatalogo_Everyday_technology_.Data.InventarioContext>
     {
         public Configuration()

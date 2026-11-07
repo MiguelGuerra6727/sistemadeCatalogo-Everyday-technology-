@@ -30,7 +30,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var producto = ProductoRepositorio.ObtnerPorId(id.Value);
+            var producto = ProductoRepositorio.ObtenerPorId(id.Value);
             if (producto == null) return HttpNotFound();
             return View(producto);
         }
@@ -75,7 +75,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var producto = ProductoRepositorio.ObtnerPorId(id.Value);
+            var producto = ProductoRepositorio.ObtenerPorId(id.Value);
             if (producto == null) return HttpNotFound();
 
             CargarSecciones(producto.SeccionId);
@@ -87,7 +87,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Producto producto, HttpPostedFileBase archivoImagen)
         {
-            var original = ProductoRepositorio.ObtnerPorId(producto.id);
+            var original = ProductoRepositorio.ObtenerPorId(producto.id);
             if (original == null) return HttpNotFound();
 
             if (!string.IsNullOrWhiteSpace(producto.Codigo) && ProductoRepositorio.ExisteCodigo(producto.Codigo, producto.id))
@@ -127,21 +127,19 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         public ActionResult Delete(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var producto = ProductoRepositorio.ObtnerPorId(id.Value);
+            var producto = ProductoRepositorio.ObtenerPorId(id.Value);
             if (producto == null) return HttpNotFound();
             return View(producto);
         }
-
         // POST: Productos Eliminar
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var producto = ProductoRepositorio.ObtnerPorId(id);
+            var producto = ProductoRepositorio.ObtenerPorId(id);
             if (producto != null)
             {
-                EliminarImagenFisica(producto.Imagen);
-                ProductoRepositorio.Eliminar(id);
+                ProductoRepositorio.Elminar(id);
                 TempData["Mensaje"] = "Producto eliminado correctamente.";
             }
             return RedirectToAction("Index");

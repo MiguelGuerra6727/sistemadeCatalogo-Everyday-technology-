@@ -1,12 +1,8 @@
-﻿using Microsoft.Ajax.Utilities;
-using sistemadeCatalogo_Everyday_technology_.Data;
+﻿using sistemadeCatalogo_Everyday_technology_.Data;
 using sistemadeCatalogo_Everyday_technology_.Models;
 using sistemadeCatalogo_Everyday_technology_.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace sistemadeCatalogo_Everyday_technology_.Controllers
@@ -14,7 +10,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
     public class CarritoController : Controller
     {
         // Esta parte hace Producyo id va ir a cantidad 
-        
+
         private Dictionary<int, int> ObtenerCarrito()
         {
             var carrito = Session["Carrito"] as Dictionary<int, int>;
@@ -30,9 +26,9 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         {
             var carrito = ObtenerCarrito();
             var vm = new CarritoViewModels { Lineas = new List<CarritoLineaViewModels>() };
-            foreach(var par in carrito.ToList())
+            foreach (var par in carrito.ToList())
             {
-                var producto = ProductoRepositorio.ObtnerPorId(par.Key);
+                var producto = ProductoRepositorio.ObtenerPorId(par.Key);
                 if (producto == null) { carrito.Remove(par.Key); continue; }
                 vm.Lineas.Add(new CarritoLineaViewModels { Producto = producto, Cantidad = par.Value });
             }
@@ -45,15 +41,15 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
                 return Redirect(returnUrl);
             return RedirectToAction("Index");
         }// fin de accion de volver a Index
-        
+
         [ChildActionOnly] //Se supone que creara el icono con la cantidad de productos
         public ActionResult Contador()
         {
             int total = ObtenerCarrito().Values.Sum();
             return PartialView("_CarritoIcono", total);
-        } 
+        }
 
-        public ActionResult Index ()
+        public ActionResult Index()
         {
             return View(ConstruirCarrito());
         }
@@ -63,13 +59,13 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         public ActionResult Agregar(int id, int cantidad = 1, string returnUrl = null)
         { //Agregar inicio 
 
-            var producto = ProductoRepositorio.ObtnerPorId(id);
+            var producto = ProductoRepositorio.ObtenerPorId(id);
             if (producto == null) return HttpNotFound();
 
             if (cantidad < 1) cantidad = 1;
             if (cantidad > 10000) cantidad = 10000;
 
-            if(producto.Stock <= 0)
+            if (producto.Stock <= 0)
             {
                 TempData["carritoError"] = producto.Nombre + " este producto esta agotado ";
                 return Volver(returnUrl);
@@ -78,10 +74,10 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
             int actual = carrito.ContainsKey(id) ? carrito[id] : 0;
             int nueva = actual + cantidad;
 
-            if(nueva > producto.Stock)
+            if (nueva > producto.Stock)
             {
                 nueva = producto.Stock;
-                TempData["CarritoError"] = " solo hay " + producto.Stock + " unidades disponible de " + producto.Nombre + ""; 
+                TempData["CarritoError"] = " solo hay " + producto.Stock + " unidades disponible de " + producto.Nombre + "";
             }
             else
             {
@@ -97,7 +93,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
         { // inicio actualizar 
 
             var carrito = ObtenerCarrito();
-            var producto = ProductoRepositorio.ObtnerPorId(id);
+            var producto = ProductoRepositorio.ObtenerPorId(id);
 
             if (producto == null || producto.Stock <= 0)
             {
@@ -113,7 +109,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
             }
             if (carrito.ContainsKey(id)) carrito[id] = cantidad;
             return RedirectToAction("Index");
-             }//fin actualizar 
+        }//fin actualizar 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -137,6 +133,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
             var carrito = ConstruirCarrito();
             if (carrito.Lineas.Count == 0) return RedirectToAction("Index");
             return View(new CheckoutViewModels { Carrito = carrito });
+            
         }
         //Simulacion del pago
 
@@ -151,12 +148,7 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
             if (!ModelState.IsValid) return View(model);
 
             var cantidades = carrito.Lineas.ToDictionary(l => l.Producto.id, l => l.Cantidad);
-            string error = ProductoRepositorio.DescontarStockLote(cantidades);
-            if (error != null)
-            {
-                TempData["CarritoError"] = error + " Adjunta tu carrito e intenta de nuevo ";
-                return RedirectToAction("Index");
-            }
+
             var pedido = new pedido
             {
                 Cliente = model.Nombre.Trim(),
@@ -172,8 +164,13 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
                     Cantidad = l.Cantidad
                 }).ToList()
             };
-        PedidoRepositorio.Agregar(pedido);
 
+            string error = PedidoRepositorio.crear(pedido, cantidades);
+            if (error != null)
+            {
+                TempData["CarritoError"] = error + " Adjunta tu carrito e intenta de nuevo ";
+                return RedirectToAction("Index");
+            }
             ObtenerCarrito().Clear();
             TempData["PedidoNumero"] = pedido.Id;
             TempData["PedidoTotal"] = pedido.Total;
@@ -186,6 +183,5 @@ namespace sistemadeCatalogo_Everyday_technology_.Controllers
             ViewBag.Total = TempData["PedidoTotal"];
             return View();
         }
-
-    }
+    } //Fin cheakOut
 }

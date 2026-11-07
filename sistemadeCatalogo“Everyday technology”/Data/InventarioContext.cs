@@ -10,7 +10,11 @@ namespace sistemadeCatalogo_Everyday_technology_.Data
 {
     public class InventarioContext : DbContext
     {
-        public InventarioContext() : base("name= InventarioConexion") { }
+        public InventarioContext() : base("name= InventarioConexion") 
+        {
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
+        }
 
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
