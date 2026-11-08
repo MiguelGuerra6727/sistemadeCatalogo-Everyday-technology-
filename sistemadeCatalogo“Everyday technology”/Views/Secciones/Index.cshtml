@@ -1,0 +1,83 @@
+﻿@model List<sistemadeCatalogo_Everyday_technology_.ViewModels.SeccionAdminViewModel>
+@{
+    ViewBag.Title = "Secciones";
+}
+
+<h2 class="mt-4">Secciones</h2>
+
+@if (TempData["SeccionMensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["SeccionMensaje"]</div>
+}
+@if (TempData["SeccionError"] != null)
+{
+    <div class="alert alert-warning">@TempData["SeccionError"]</div>
+}
+
+<p>
+    <a href="@Url.Action("Create", "Secciones")" class="btn btn-primary">Nueva sección</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Productos activos</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var s = item.Seccion;
+                var imagen = string.IsNullOrEmpty(s.Imagen) ? "sin-imagen.png" : s.Imagen;
+                <tr>
+                    <td style="width:80px;">
+                        <img src="@Url.Content("~/Content/Imagenes/" + imagen)" alt="@s.Nombre"
+                             style="height:60px; width:60px; object-fit:contain;" />
+                    </td>
+                    <td>@s.Nombre</td>
+                    <td>@s.Descripcion</td>
+                    <td>@item.ProductosActivos</td>
+                    <td>
+                        @if (s.Activo)
+                        {
+                            <span class="badge bg-success">Activa</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Desactivada</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="d-flex gap-1">
+                            <a href="@Url.Action("Edit", "Secciones", new { id = s.Id })" class="btn btn-outline-primary btn-sm">Editar</a>
+                            @using (Html.BeginForm("CambiarEstado", "Secciones", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@s.Id" />
+                                if (s.Activo)
+                                {
+                                    <input type="hidden" name="activar" value="false" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm"
+                                            onclick="return confirm('¿Desactivar esta sección? Dejará de verse en el catálogo.');">
+                                        Desactivar
+                                    </button>
+                                }
+                                else
+                                {
+                                    <input type="hidden" name="activar" value="true" />
+                                    <button type="submit" class="btn btn-outline-success btn-sm">Activar</button>
+                                }
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

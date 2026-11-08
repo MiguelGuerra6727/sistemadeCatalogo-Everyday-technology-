@@ -133,6 +133,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
+    <Compile Include="Controllers\SeccionesController.cs" />
     <Compile Include="Data\InventarioContext.cs" />
     <Compile Include="Data\PasswordHelper.cs" />
     <Compile Include="Data\PedidoRepositorio.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ImagenHelper.cs" />
     <Compile Include="Migrations\202611060812218_CreacionInicial.cs" />
     <Compile Include="Migrations\202611060812218_CreacionInicial.Designer.cs">
       <DependentUpon>202611060812218_CreacionInicial.cs</DependentUpon>
@@ -155,6 +157,7 @@
     <Compile Include="Models\Seccion.cs" />
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\SeccionAdminViewModel.cs" />
     <Compile Include="ViewModels\SeccionProductosViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +226,9 @@
     <Content Include="Views\Carrito\Gracias.cshtml" />
     <Content Include="Views\Pedidos\Index.cshtml" />
     <Content Include="Views\Pedidos\Details.cshtml" />
+    <Content Include="Views\Secciones\Index.cshtml" />
+    <Content Include="Views\Secciones\Create.cshtml" />
+    <Content Include="Views\Secciones\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,38 @@
+﻿@model sistemadeCatalogo_Everyday_technology_.Models.Seccion
+@{
+    ViewBag.Title = "Editar sección";
+    var imagen = string.IsNullOrEmpty(Model.Imagen) ? "sin-imagen.png" : Model.Imagen;
+}
+
+<h2 class="mt-4">Editar sección</h2>
+
+@using (Html.BeginForm("Edit", "Secciones", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Nombre, "Nombre")
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Descripcion, "Descripción")
+        @Html.TextAreaFor(m => m.Descripcion, 3, 40, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
+        <label>Imagen actual</label><br />
+        <img src="@Url.Content("~/Content/Imagenes/" + imagen)" alt="@Model.Nombre"
+             style="height:100px; object-fit:contain;" />
+    </div>
+    <div class="mb-3">
+        <label for="archivoImagen">Cambiar imagen (opcional)</label>
+        <input type="file" id="archivoImagen" name="archivoImagen" class="form-control" />
+        @Html.ValidationMessage("Imagen", "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <a href="@Url.Action("Index", "Secciones")" class="btn btn-outline-secondary">Cancelar</a>
+}
