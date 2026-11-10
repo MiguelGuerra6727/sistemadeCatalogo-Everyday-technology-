@@ -1,7 +1,9 @@
 ﻿@model  sistemadeCatalogo_Everyday_technology_.Models.Producto
-@{ ViewBag.Title = "Editar producto"; }
-
+@{ ViewBag.Title = "Editar producto"; 
+var imagen = string.IsNullOrEmpty(Model.Imagen) ? "sin-imagen.png" : Model.Imagen;
+}
 <h2>Editar producto</h2>
+
 
 @using (Html.BeginForm("Edit", "Productos", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -42,12 +44,12 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Imagen actual</label><br />
-        <img src="~/Content/Imagenes/@Model.Imagen" style="width:120px;" class="mb-2" /><br />
-        <input type="file" name="archivoImagen" class="form-control" accept="image/*" />
+        <img src="@Url.Content("~/Content/Imagenes/" + imagen)" alt="@Model.Nombre" style="width:120px;" class="mb-2" /><br />
+        <label for="archivoImagen" class="form-label">Cambiar imagen (opcional)</label>
+        <input type="file" id="archivoImagen" name="archivoImagen" class="form-control" accept=".jpg,.jpeg,.png,.gif,.webp" />
         <small class="text-muted">Déjalo vacío para conservar la imagen actual.</small>
-        @Html.ValidationMessageFor(m => m.Imagen, "", new { @class = "text-danger" })
+        @Html.ValidationMessage("Imagen", "", new { @class = "text-danger" })
     </div>
-
     <button type="submit" class="btn btn-success">Guardar cambios</button>
     @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
 }

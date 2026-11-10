@@ -18,7 +18,13 @@ SELECT Id, Nombre, Correo, RolId, Activo FROM Usuarios;
 /*Fin*/
 /*PROBAR COSAS RELACIONADO A PRODUCTOS AQUI*/
 
-SELECT id,Codigo, Nombre, Precio, Stock, SeccionId, Activo FROM Productos; 
+SELECT id,Codigo, Nombre, Precio, Stock, SeccionId, Activo FROM Productos;
+Delete from Productos where id = 5; /*Borrar algun producto desde aqui por su id*/
+SELECT Id, Nombre, Imagen FROM Secciones; /*Para ver imagenes */
+SELECT id, Codigo, Nombre, Imagen FROM Productos; /*Ver si se guarda la imagen*/
+SELECT id, Codigo, Nombre, Imagen FROM Productos ORDER BY id DESC;
+
+Select * from Productos;
 /*Fin*/
 
 /*Pruebas de ventas*/
@@ -33,4 +39,7 @@ INNER JOIN PedidoItems i ON i.PedidoId = p.Id
 GROUP BY p.Id, p.Cliente, p.Estado;
 
 UPDATE Productos SET Stock = 0 WHERE id = 1
+UPDATE Productos SET Stock = 0 WHERE id = 3
+
+update Productos SET Stock = 20 Where id = 1
 /*Fin de las pruebas*/
