@@ -1,13 +1,167 @@
-﻿/* Set padding to keep content from hitting the edges */
-.body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
+﻿/* =========================================================
+   EVERYDAY TECHNOLOGY - Site.css
+   Tema: Modern Industrial
+   ========================================================= */
+
+/* ---------- Colores (cambia la paleta desde aquí) ---------- */
+:root {
+    --ind-bg-dark: #1c1f23; /* acero oscuro */
+    --ind-bg-steel: #2a2f35; /* acero medio */
+    --ind-panel: #eceef0; /* concreto claro */
+    --ind-accent: #f26b21; /* naranja de seguridad */
+    --ind-accent-dark: #d4560f;
+    --ind-text: #22262b;
+    --ind-border: #cfd4da;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
+/* ---------- Fondo: metal oscuro con cuadrícula sutil ---------- */
+body {
+    color: var(--ind-text);
+    min-height: 100vh;
+    background-color: var(--ind-bg-dark);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px), linear-gradient(135deg, var(--ind-bg-dark) 0%, var(--ind-bg-steel) 100%);
+    background-size: 40px 40px, 40px 40px, 100% 100%;
+    background-attachment: fixed;
+}
+
+/* ---------- Menú superior ---------- */
+.navbar.bg-dark {
+    background-color: #14161a !important;
+    border-bottom: 3px solid var(--ind-accent);
+}
+
+.navbar-brand span {
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--ind-accent);
+}
+
+/* ---------- Carrito en el menú ---------- */
+.carrito-link {
+    padding: 0.25rem 0.75rem;
+    margin-right: 0.5rem;
+    font-size: 2rem; 
+}
+
+.carrito-icono {
+    height: 48px;
+    width: auto;
+    max-width: 90px;
+    object-fit: contain;
+    border-radius: 6px;
+    transition: transform 0.2s ease;
+}
+
+.carrito-link:hover .carrito-icono {
+    transform: scale(1.08);
+}
+
+.carrito-contador {
+    margin-left: 0.5rem;
+    padding: 0.45em 0.7em;
+    font-size: 1rem;
+}
+
+/* ---------- Panel de contenido (concreto claro sobre el fondo) ---------- */
+.body-content {
+    margin-top: 24px;
+    margin-bottom: 32px;
+    padding: 24px 28px 28px;
+    background: var(--ind-panel);
+    border-top: 4px solid var(--ind-accent);
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+    .body-content > hr:last-child {
+        display: none;
+    }
+
+    .body-content h1 {
+        padding-left: 14px;
+        border-left: 6px solid var(--ind-accent);
+        color: var(--ind-bg-dark);
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+/* ---------- Tarjetas del catálogo (secciones y productos) ---------- */
+/* Más espacio entre tarjetas */
+.row.g-4 {
+    --bs-gutter-x: 2rem;
+    --bs-gutter-y: 2rem;
+}
+
+/* El !important es necesario porque Bootstrap trae "shadow-sm" con !important */
+.card.h-100 {
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--ind-border);
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .card.h-100:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.38) !important;
+    }
+
+    .card.h-100 .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        background: #e3e6e9;
+    }
+
+    .card.h-100 .card-body {
+        padding: 1.25rem;
+    }
+
+    .card.h-100 .card-title {
+        color: var(--ind-bg-dark);
+        font-weight: 700;
+    }
+
+    .card.h-100 .card-footer {
+        padding: 0 1.25rem 1.25rem;
+    }
+
+/* ---------- Botón "Ver productos" más grande ---------- */
+/* Solo afecta a los botones normales del pie de la tarjeta (los btn-sm quedan igual) */
+.card-footer .btn-primary:not(.btn-sm) {
+    padding: 0.7rem 1.6rem;
+    background-color: var(--ind-accent);
+    border-color: var(--ind-accent);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+    .card-footer .btn-primary:not(.btn-sm):hover {
+        background-color: var(--ind-accent-dark);
+        border-color: var(--ind-accent-dark);
+        color: #fff;
+    }
+
+/* ---------- Pantallas pequeñas ---------- */
+@media (max-width: 576px) {
+    .body-content {
+        margin-top: 12px;
+        padding: 16px;
+    }
+}
+
+/* ----------  Reglas originales de la plantilla ---------- */
+/* Override the default bootstrap behavior where horizontal description lists
+   will truncate terms that are too long to fit in the left column */
 .dl-horizontal dt {
     white-space: normal;
 }
@@ -18,3 +172,175 @@ select,
 textarea {
     max-width: 280px;
 }
+/* =========================================================
+   TEMA "NEON GAMING & PERFORMANCE"
+   Solo se aplica a las páginas con <body class="tema-neon">
+   (productos de cada sección)
+   ========================================================= */
+
+:root {
+    --neon-cyan: #00f0ff;
+    --neon-magenta: #ff2bd6;
+    --neon-violet: #7c3aed;
+    --neon-green: #39ff88;
+    --neon-bg: #07060f;
+    --neon-card: #110f26;
+    --neon-text: #e8ecff;
+    --neon-muted: #9fb0d0;
+}
+
+/* ---------- Fondo: negro violeta con luces neón y cuadrícula ---------- */
+body.tema-neon {
+    color: var(--neon-text);
+    background-color: var(--neon-bg);
+    background-image: radial-gradient(ellipse at 12% 8%, rgba(0, 240, 255, 0.24) 0%, transparent 45%), radial-gradient(ellipse at 88% 18%, rgba(255, 43, 214, 0.22) 0%, transparent 45%), radial-gradient(ellipse at 50% 100%, rgba(124, 58, 237, 0.30) 0%, transparent 55%), linear-gradient(rgba(0, 240, 255, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.045) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    background-attachment: fixed;
+}
+
+    /* ---------- Menú ---------- */
+    body.tema-neon .navbar.bg-dark {
+        background-color: #05040c !important;
+        border-bottom: 3px solid transparent;
+        border-image: linear-gradient(90deg, var(--neon-cyan), var(--neon-violet), var(--neon-magenta)) 1;
+    }
+
+    body.tema-neon .navbar-dark .navbar-nav .nav-link:hover {
+        color: var(--neon-cyan);
+    }
+
+    /* ---------- Panel de contenido: cristal oscuro con brillo ---------- */
+    body.tema-neon .body-content {
+        color: var(--neon-text);
+        background: rgba(12, 10, 28, 0.80);
+        border: 1px solid rgba(0, 240, 255, 0.35);
+        border-top: 4px solid var(--neon-cyan);
+        box-shadow: 0 0 24px rgba(0, 240, 255, 0.20), 0 0 60px rgba(255, 43, 214, 0.14), inset 0 0 40px rgba(0, 0, 0, 0.45);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+    }
+
+        body.tema-neon .body-content h2 {
+            padding-left: 14px;
+            border-left: 6px solid var(--neon-magenta);
+            color: #fff;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 0 14px rgba(0, 240, 255, 0.75);
+        }
+
+    body.tema-neon .text-muted {
+        color: var(--neon-muted) !important;
+    }
+
+    body.tema-neon .body-content a:not(.btn) {
+        color: var(--neon-cyan);
+        text-decoration: none;
+    }
+
+        body.tema-neon .body-content a:not(.btn):hover {
+            color: var(--neon-magenta);
+            text-shadow: 0 0 10px rgba(255, 43, 214, 0.7);
+        }
+
+    /* ---------- Tarjetas de producto ---------- */
+    body.tema-neon .card.h-100 {
+        color: var(--neon-text);
+        background: linear-gradient(160deg, #15122f 0%, var(--neon-card) 55%, #0b0a1c 100%);
+        border: 1px solid rgba(0, 240, 255, 0.45);
+        border-radius: 10px;
+        box-shadow: 0 0 14px rgba(0, 240, 255, 0.28), 0 8px 24px rgba(0, 0, 0, 0.60) !important;
+    }
+
+        body.tema-neon .card.h-100:hover {
+            border-color: var(--neon-magenta);
+            transform: translateY(-6px);
+            box-shadow: 0 0 24px rgba(255, 43, 214, 0.55), 0 0 44px rgba(0, 240, 255, 0.25), 0 14px 30px rgba(0, 0, 0, 0.65) !important;
+        }
+
+        body.tema-neon .card.h-100 .card-img-top {
+            background: #0a0918;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.25);
+        }
+
+        body.tema-neon .card.h-100 .card-title {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        body.tema-neon .card.h-100 .card-text {
+            color: #cdd6f6;
+        }
+
+        body.tema-neon .card.h-100 .card-footer {
+            padding-top: 1rem;
+            background: rgba(255, 255, 255, 0.04);
+            border-top: 1px solid rgba(0, 240, 255, 0.25);
+        }
+
+            /* Precio en verde neón */
+            body.tema-neon .card.h-100 .card-footer strong {
+                color: var(--neon-green);
+                font-size: 1.4rem;
+                text-shadow: 0 0 10px rgba(57, 255, 136, 0.65);
+            }
+
+    /* Etiquetas de stock con brillo */
+    body.tema-neon .badge.bg-danger {
+        box-shadow: 0 0 10px rgba(220, 53, 69, 0.8);
+    }
+
+    body.tema-neon .badge.bg-warning {
+        box-shadow: 0 0 10px rgba(255, 193, 7, 0.7);
+    }
+
+    /* ---------- Cantidad y botón "Agregar al carrito" ---------- */
+    body.tema-neon .card-footer .form-control {
+        color: #fff;
+        background: #0a0918;
+        border: 1px solid rgba(0, 240, 255, 0.55);
+    }
+
+        body.tema-neon .card-footer .form-control:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+        }
+
+    body.tema-neon .card-footer .btn-primary {
+        padding: 0.55rem 1rem;
+        color: #fff;
+        background: linear-gradient(90deg, var(--neon-cyan), var(--neon-violet) 55%, var(--neon-magenta));
+        border: 0;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 14px rgba(0, 240, 255, 0.55);
+        transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+        body.tema-neon .card-footer .btn-primary:hover {
+            filter: brightness(1.15);
+            transform: translateY(-2px);
+            box-shadow: 0 0 22px rgba(255, 43, 214, 0.75);
+        }
+
+    /* Botón de producto agotado */
+    body.tema-neon .card-footer .btn-secondary:disabled {
+        color: #7d8399;
+        background: #1a1830;
+        border: 1px solid #2c2a48;
+        box-shadow: none;
+        text-transform: uppercase;
+        opacity: 1;
+    }
+
+    /* ---------- Avisos dentro del panel ---------- */
+    body.tema-neon .alert-info {
+        color: #bff8ff;
+        background: rgba(0, 240, 255, 0.10);
+        border: 1px solid rgba(0, 240, 255, 0.40);
+    }

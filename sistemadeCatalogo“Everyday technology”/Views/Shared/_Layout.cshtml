@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Everyday technology </title>
@@ -9,22 +9,21 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body class="@ViewBag.BodyClass">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            <!--Inicip para colocar logo-->
+            <!--Inicio para colocar logo-->
             <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Catalogo")">
                 <img src="~/Content/Imagenes/Logo.JPG.jpg" alt="Logo" style="height:35px;" class="me-2" />
                 <span>Repuestos PC</span>
             </a>
-            <!---Fin de cambio de logo-->
+            <!--Fin de cambio de logo-->
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <!--Voy a cambiar este-->
                 <ul class="navbar-nav ms-auto align-items-center">
                     @if (!User.IsInRole("Admin"))
                     {
@@ -56,22 +55,23 @@
             </div>
         </div>
     </nav>
-    <div class="alert alert-success mt-3">@TempData["CarritoMensaje"]</div>
-    <!---Cambio para la vista de mensaje tiempo-->
-    @if (TempData["CarritoMensaje"] != null)
-    {
 
-    }
-    @if (TempData["CarritoError"] != null)
-    {
-        <div class="alert alert-warning mt-3">@TempData["CarritoError"]</div>
-    }
-   
-<div class="container body-content">
-    <!---Cambio para la vista de mensaje tiempo-->
-    @RenderBody()
-    <hr />
-</div>
+    <!--Avisos del carrito: solo se dibujan si hay mensaje-->
+    <div class="container">
+        @if (TempData["CarritoMensaje"] != null)
+        {
+            <div class="alert alert-success mt-3">@TempData["CarritoMensaje"]</div>
+        }
+        @if (TempData["CarritoError"] != null)
+        {
+            <div class="alert alert-warning mt-3">@TempData["CarritoError"]</div>
+        }
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
